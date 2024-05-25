@@ -20,14 +20,13 @@ public class Main {
                 System.out.print("Ingrese su elección: ");
                 opcion = scanner.nextInt();
 
-                double tasaARS = 0;
-                double cantidadARS = 0;
+
 
                 switch (opcion) {
                     case 1:
                         System.out.println("Ha seleccionado la Opción 1 (ARS a USD)");
                         System.out.print("Ingrese la cantidad de ARS a convertir: ");
-                        cantidadARS = scanner.nextDouble();
+                        double cantidad1 = scanner.nextDouble();
 
                         Moneda monedaOrigen1 = new Moneda("ARS");
                         Moneda monedaDestino1 = new Moneda("USD");
@@ -35,7 +34,7 @@ public class Main {
                         Map<String, Double> tasasARS = conexionApi.obtenerTasasDeCambio(monedaOrigen1.getnombre(), monedaDestino1.getnombre());
                         if (tasasARS != null) {
                             Conversor.inicializarTasasDeCambio(tasasARS);
-                            double resultadoUSD = Conversor.convertir(cantidadARS, monedaOrigen1.getnombre(), monedaDestino1.getnombre());
+                            double resultadoUSD = Conversor.convertir(cantidad1, monedaOrigen1.getnombre(), monedaDestino1.getnombre());
                             System.out.println("Resultado de la conversión: " + resultadoUSD + " USD");
                         }
                         break;
@@ -43,7 +42,7 @@ public class Main {
                     case 2:
                         System.out.println("Ha seleccionado la Opción 2 (USD a ARS)");
                         System.out.print("Ingrese la cantidad de USD a convertir: ");
-                        Double cantidadUSD = scanner.nextDouble();
+                        Double cantidad2 = scanner.nextDouble();
 
                         Moneda monedaOrigen2 = new Moneda("USD");
                         Moneda monedaDestino2 = new Moneda("ARS");
@@ -51,7 +50,7 @@ public class Main {
                         Map<String, Double> tasasUSD = conexionApi.obtenerTasasDeCambio(monedaOrigen2.getnombre(), monedaDestino2.getnombre());
                         if (tasasUSD != null) {
                             Conversor.inicializarTasasDeCambio(tasasUSD);
-                            double resultadoARS = Conversor.convertir(cantidadUSD, monedaOrigen2.getnombre(), monedaDestino2.getnombre());
+                            double resultadoARS = Conversor.convertir(cantidad2, monedaOrigen2.getnombre(), monedaDestino2.getnombre());
                             System.out.println("Resultado de la conversión: " + resultadoARS + " ARS");
                         }
                         break;
@@ -59,7 +58,7 @@ public class Main {
                     case 3:
                         System.out.println("Ha seleccionado la Opción 3 (ARS a EUR)");
                         System.out.print("Ingrese la cantidad de ARS a convertir: ");
-                        cantidadARS = scanner.nextDouble();
+                         double cantidad3 = scanner.nextDouble();
 
                         Moneda monedaOrigen3 = new Moneda("ARS");
                         Moneda monedaDestino3 = new Moneda("EUR");
@@ -67,7 +66,7 @@ public class Main {
                         Map<String, Double> tasasARS_EUR = conexionApi.obtenerTasasDeCambio(monedaOrigen3.getnombre(), monedaDestino3.getnombre());
                         if (tasasARS_EUR != null) {
                             Conversor.inicializarTasasDeCambio(tasasARS_EUR);
-                            double resultadoEUR = Conversor.convertir(cantidadARS, monedaOrigen3.getnombre(), monedaDestino3.getnombre());
+                            double resultadoEUR = Conversor.convertir(cantidad3, monedaOrigen3.getnombre(), monedaDestino3.getnombre());
                             System.out.println("Resultado de la conversión: " + resultadoEUR + " EUR");
                         }
                         break;
@@ -75,7 +74,7 @@ public class Main {
                     case 4:
                         System.out.println("Ha seleccionado la Opción 4 (EUR a ARS)");
                         System.out.print("Ingrese la cantidad de EUR a convertir: ");
-                        Double cantidadEUR = scanner.nextDouble();
+                        Double cantidad4 = scanner.nextDouble();
 
                         Moneda monedaOrigen4 = new Moneda("EUR");
                         Moneda monedaDestino4 = new Moneda("ARS");
@@ -83,7 +82,7 @@ public class Main {
                         Map<String, Double> tasasEUR_ARS = conexionApi.obtenerTasasDeCambio(monedaOrigen4.getnombre(), monedaDestino4.getnombre());
                         if (tasasEUR_ARS != null) {
                             Conversor.inicializarTasasDeCambio(tasasEUR_ARS);
-                            double resultadoARS = Conversor.convertir(cantidadEUR, monedaOrigen4.getnombre(), monedaDestino4.getnombre());
+                            double resultadoARS = Conversor.convertir(cantidad4, monedaOrigen4.getnombre(), monedaDestino4.getnombre());
                             System.out.println("Resultado de la conversión: " + resultadoARS + " ARS");
                         }
                         break;
