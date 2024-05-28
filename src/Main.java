@@ -1,11 +1,12 @@
 import java.io.IOException;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int opcion;
+        Moneda monedaOrigen = new Moneda("ARS");
+        Moneda monedaDestino = new Moneda("USD");
 
         try {
             ConexionApi conexionApi = new ConexionApi();
@@ -20,74 +21,42 @@ public class Main {
                 System.out.print("Ingrese su elección: ");
                 opcion = scanner.nextInt();
 
-
-
                 switch (opcion) {
                     case 1:
-                        System.out.println("Ha seleccionado la Opción 1 (ARS a USD)");
-                        System.out.print("Ingrese la cantidad de ARS a convertir: ");
-                        double cantidad1 = scanner.nextDouble();
-
-                        Moneda monedaOrigen1 = new Moneda("ARS");
-                        Moneda monedaDestino1 = new Moneda("USD");
-
-                        Map<String, Double> tasasARS = conexionApi.obtenerTasasDeCambio(monedaOrigen1.getnombre(), monedaDestino1.getnombre());
-                        if (tasasARS != null) {
-                            Conversor.inicializarTasasDeCambio(tasasARS);
-                            double resultadoUSD = Conversor.convertir(cantidad1, monedaOrigen1.getnombre(), monedaDestino1.getnombre());
-                            System.out.println("Resultado de la conversión: " + resultadoUSD + " USD");
-                        }
+                        monedaOrigen.setMoneda("ARS");
+                        monedaDestino.setMoneda("USD");
                         break;
-
                     case 2:
-                        System.out.println("Ha seleccionado la Opción 2 (USD a ARS)");
-                        System.out.print("Ingrese la cantidad de USD a convertir: ");
-                        Double cantidad2 = scanner.nextDouble();
-
-                        Moneda monedaOrigen2 = new Moneda("USD");
-                        Moneda monedaDestino2 = new Moneda("ARS");
-
-                        Map<String, Double> tasasUSD = conexionApi.obtenerTasasDeCambio(monedaOrigen2.getnombre(), monedaDestino2.getnombre());
-                        if (tasasUSD != null) {
-                            Conversor.inicializarTasasDeCambio(tasasUSD);
-                            double resultadoARS = Conversor.convertir(cantidad2, monedaOrigen2.getnombre(), monedaDestino2.getnombre());
-                            System.out.println("Resultado de la conversión: " + resultadoARS + " ARS");
-                        }
+                        monedaOrigen.setMoneda("USD");
+                        monedaDestino.setMoneda("ARS");
                         break;
-
                     case 3:
-                        System.out.println("Ha seleccionado la Opción 3 (ARS a EUR)");
-                        System.out.print("Ingrese la cantidad de ARS a convertir: ");
-                         double cantidad3 = scanner.nextDouble();
-
-                        Moneda monedaOrigen3 = new Moneda("ARS");
-                        Moneda monedaDestino3 = new Moneda("EUR");
-
-                        Map<String, Double> tasasARS_EUR = conexionApi.obtenerTasasDeCambio(monedaOrigen3.getnombre(), monedaDestino3.getnombre());
-                        if (tasasARS_EUR != null) {
-                            Conversor.inicializarTasasDeCambio(tasasARS_EUR);
-                            double resultadoEUR = Conversor.convertir(cantidad3, monedaOrigen3.getnombre(), monedaDestino3.getnombre());
-                            System.out.println("Resultado de la conversión: " + resultadoEUR + " EUR");
-                        }
+                        monedaOrigen.setMoneda("ARS");
+                        monedaDestino.setMoneda("EUR");
                         break;
-
                     case 4:
-                        System.out.println("Ha seleccionado la Opción 4 (EUR a ARS)");
-                        System.out.print("Ingrese la cantidad de EUR a convertir: ");
-                        Double cantidad4 = scanner.nextDouble();
-
-                        Moneda monedaOrigen4 = new Moneda("EUR");
-                        Moneda monedaDestino4 = new Moneda("ARS");
-
-                        Map<String, Double> tasasEUR_ARS = conexionApi.obtenerTasasDeCambio(monedaOrigen4.getnombre(), monedaDestino4.getnombre());
-                        if (tasasEUR_ARS != null) {
-                            Conversor.inicializarTasasDeCambio(tasasEUR_ARS);
-                            double resultadoARS = Conversor.convertir(cantidad4, monedaOrigen4.getnombre(), monedaDestino4.getnombre());
-                            System.out.println("Resultado de la conversión: " + resultadoARS + " ARS");
-                        }
+                        monedaOrigen.setMoneda("EUR");
+                        monedaDestino.setMoneda("ARS");
                         break;
+                    case 5:
+                        System.out.println("Saliendo...");
+                        break;
+                    default:
+                        System.out.println("Opción no válida. Por favor, intente de nuevo.");
+                        continue;
                 }
 
+                if (opcion >= 1 && opcion <= 4) {
+                    System.out.print("Ingrese la cantidad a convertir: ");
+                    double cantidad = scanner.nextDouble();
+
+                    TasaDeCambio tasaDeCambio = conexionApi.obtenerTasaDeCambio(monedaOrigen, monedaDestino);
+                    if (tasaDeCambio != null) {
+                        Conversor conversor = new Conversor();
+                        double resultado = conversor.convertir(cantidad, tasaDeCambio);
+                        System.out.println("Resultado de la conversión: " + resultado + " " + monedaDestino.getnombre());
+                    }
+                }
             } while (opcion != 5);
         } catch (IOException | InterruptedException e) {
             System.out.println("Error al conectar con la API: " + e.getMessage());
@@ -96,3 +65,4 @@ public class Main {
         }
     }
 }
+
